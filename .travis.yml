@@ -1,0 +1,16 @@
+sudo:
+  - false
+language:
+  - cpp
+compiler:
+  - clang
+  - gcc
+script:
+  - make check
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - clang
