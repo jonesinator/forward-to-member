@@ -1,5 +1,7 @@
 FORWARD_TO_MEMBER
 =================
+[![Build Status](https://travis-ci.org/jonesinator/forward-to-member.svg)](https://travis-ci.org/jonesinator/forward-to-member)
+
 This library provides two macros FORWARD_TO_MEMBER and FORWARD_TO_MEMBER_AS. The purpose of these
 macros is to simplify the fairly common case below:
 
