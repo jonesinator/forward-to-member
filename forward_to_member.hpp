@@ -96,40 +96,6 @@ template<typename T>
 struct is_shared_ptr<const volatile std::shared_ptr<T>> : public std::true_type { };
 
 /**
- * Test all combinations of is_shared_ptr for int.
- */
-#define TEST_IS_SHARED_PTR(t, exp) \
-    static_assert(is_shared_ptr<t>::value == exp, "Unexpected is_shared_ptr result.");
-TEST_IS_SHARED_PTR(int,                                                false);
-TEST_IS_SHARED_PTR(const int,                                          false);
-TEST_IS_SHARED_PTR(volatile int,                                       false);
-TEST_IS_SHARED_PTR(const volatile int,                                 false);
-TEST_IS_SHARED_PTR(int&,                                               false);
-TEST_IS_SHARED_PTR(const int&,                                         false);
-TEST_IS_SHARED_PTR(volatile int&,                                      false);
-TEST_IS_SHARED_PTR(const volatile int&,                                false);
-TEST_IS_SHARED_PTR(int*,                                               false);
-TEST_IS_SHARED_PTR(const int*,                                         false);
-TEST_IS_SHARED_PTR(volatile int*,                                      false);
-TEST_IS_SHARED_PTR(const volatile int*,                                false);
-TEST_IS_SHARED_PTR(std::shared_ptr<int>,                               true);
-TEST_IS_SHARED_PTR(std::shared_ptr<const int>,                         true);
-TEST_IS_SHARED_PTR(std::shared_ptr<volatile int>,                      true);
-TEST_IS_SHARED_PTR(std::shared_ptr<const volatile int>,                true);
-TEST_IS_SHARED_PTR(const std::shared_ptr<int>,                         true);
-TEST_IS_SHARED_PTR(const std::shared_ptr<const int>,                   true);
-TEST_IS_SHARED_PTR(const std::shared_ptr<volatile int>,                true);
-TEST_IS_SHARED_PTR(const std::shared_ptr<const volatile int>,          true);
-TEST_IS_SHARED_PTR(volatile std::shared_ptr<int>,                      true);
-TEST_IS_SHARED_PTR(volatile std::shared_ptr<const int>,                true);
-TEST_IS_SHARED_PTR(volatile std::shared_ptr<volatile int>,             true);
-TEST_IS_SHARED_PTR(volatile std::shared_ptr<const volatile int>,       true);
-TEST_IS_SHARED_PTR(const volatile std::shared_ptr<int>,                true);
-TEST_IS_SHARED_PTR(const volatile std::shared_ptr<const int>,          true);
-TEST_IS_SHARED_PTR(const volatile std::shared_ptr<volatile int>,       true);
-TEST_IS_SHARED_PTR(const volatile std::shared_ptr<const volatile int>, true);
-
-/**
  * Gets the "underlying" (i.e. raw, no const, no volatile, no pointer, and no reference modifiers on
  * the type. This is the general case.
  */
@@ -191,41 +157,6 @@ struct forward_member_underlying_type<const volatile std::shared_ptr<T>>
                      typename std::remove_pointer<
                          typename std::remove_reference<T>::type>::type>::type;
 };
-
-/**
- * Test all combinations of forward_member_underlying_type for int.
- */
-#define TEST_FORWARD_MEMBER_UNDERLYING_TYPE(t)                                       \
-    static_assert(std::is_same<int, forward_member_underlying_type<t>::type>::value, \
-                  "Unexpected underlying type.")
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(int);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const int);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile int);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile int);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(int&);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const int&);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile int&);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile int&);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(int*);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const int*);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile int*);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile int*);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(std::shared_ptr<int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(std::shared_ptr<const int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(std::shared_ptr<volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(std::shared_ptr<const volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const std::shared_ptr<int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const std::shared_ptr<const int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const std::shared_ptr<volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const std::shared_ptr<const volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile std::shared_ptr<int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile std::shared_ptr<const int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile std::shared_ptr<volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(volatile std::shared_ptr<const volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile std::shared_ptr<int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile std::shared_ptr<const int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile std::shared_ptr<volatile int>);
-TEST_FORWARD_MEMBER_UNDERLYING_TYPE(const volatile std::shared_ptr<const volatile int>);
 
 } /* End namespace detail. */
 
