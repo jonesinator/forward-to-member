@@ -1,17 +1,33 @@
 sudo: false
 language: cpp
 compiler:
-  - clang
-  - gcc
+- clang
+- gcc
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+- cd ${TRAVIS_BUILD_DIR}
+- wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+- tar -xf lcov_1.11.orig.tar.gz
+- cd lcov_1.11.orig
+- PREFIX=./ make install
+- gem install coveralls-lcov
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 script:
-  - make check
+- cd ${TRAVIS_BUILD_DIR}
+- if [ "$CXX" = "g++-4.9" ]; then make coverage else make check fi
+after_success:
+- if [ "$CXX" = "g++-4.9" ]; then cd ${TRAVIS_BUILD_DIR}; fi
+- if [ "$CXX" = "g++-4.9" ]; then ./lcov_1.11.orig/usr/bin/lcov --directory . --capture --output-file coverage.info; fi
+- if [ "$CXX" = "g++-4.9" ]; then ./lcov_1.11.orig/usr/bin/lcov --remove coverage.info '/usr/*' --output-file coverage.info; fi
+- if [ "$CXX" = "g++-4.9" ]; then ./lcov_1.11.orig/usr/bin/lcov --list coverage.info; fi
+- if [ "$CXX" = "g++-4.9" ]; then coveralls-lcov --repo-token ${COVERALLS_REPO_TOKEN} coverage.info; fi
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - gcc-4.9
-      - g++-4.9
-      - clang
+    - gcc-4.9
+    - g++-4.9
+    - clang
+env:
+  global:
+    secure: Ajqq2cOTpPB7KBxbc5wDq6yONge8nL2PAI447+zT+GHnoDpmoIrUzfNDtDZVXbEIF5qFfLIOJ3JNwCgSe9VU31B3M1OPRMwVr+2hRh+ByzNzorPgAapLvg+RUDnsRaeYQx/iYRfG4s4OxbT4DHL7ac/6UPymwyQr3E7/E9tF2M+ZRVIg5c32OoGuAybWb6K9YHYrvfWojvJc534Uz5i+UCunBDYG+T4KdCxnqdmn9sQmhd6R89fW4Lqcytuz4nFvD5WfqybvE2/xf6F+J1YozGkN+BfZwaoEcwELODmSrHWr7/y3CNBxdI6SDT/XiVHLvgvYDSLvWp+2AnVrcmRGAWbkvzj8wREQb1/Wfmj2q2SVohwltz1yA/bEcipVrxG3R6CgptpmK2G4meGj4DaD5hLqaIy7U+tt+X6ruLA9bppoWnMrBf4hsADQU7pbdhs/zIYgp422nGaHCf8DUZHpxPo9oXg+/5314M2qz31Aga906fat7xWcVcEdWTMnP5ZCJgN0/0v5K9OEZdhpeXUlagzOUESaIoQAPQyDnReVM+EhbGZl2p0UHvYB/XAgYETTtUndN3gXuQQB7ZH1PqpgYlo2xBCHGfakhAq3Esyw6t8yNC7LDkNpV8bc2rFL+d33C5MhNF1N/Oq0+V5Jc7r0x7ZPzXK9grSyh+Fp/KkvUBs=
