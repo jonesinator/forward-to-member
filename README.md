@@ -1,6 +1,6 @@
 FORWARD_TO_MEMBER
 =================
-[![Build Status](https://travis-ci.org/jonesinator/forward-to-member.svg)](https://travis-ci.org/jonesinator/forward-to-member)
+[![Build Status](https://travis-ci.org/jonesinator/forward-to-member.svg)](https://travis-ci.org/jonesinator/forward-to-member) [![Coverage Status](https://coveralls.io/repos/jonesinator/forward-to-member/badge.svg?branch=master&service=github)](https://coveralls.io/github/jonesinator/forward-to-member?branch=master)
 
 This library provides two macros FORWARD_TO_MEMBER and FORWARD_TO_MEMBER_AS. The purpose of these
 macros is to simplify the fairly common case below:
