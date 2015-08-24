@@ -13,10 +13,8 @@ install:
 - if [ "$CXX" == "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 script:
 - cd ${TRAVIS_BUILD_DIR}
-- echo $CXX
 - if [ "$CXX" == "g++-4.9" ]; then make coverage; else make check; fi
 after_success:
-- echo $CXX
 - if [ "$CXX" == "g++-4.9" ]; then cd ${TRAVIS_BUILD_DIR}; fi
 - if [ "$CXX" == "g++-4.9" ]; then ./lcov-1.11/usr/bin/lcov --gcov-tool /usr/bin/gcov-4.9 --directory . --capture --output-file coverage.info; fi
 - if [ "$CXX" == "g++-4.9" ]; then ./lcov-1.11/usr/bin/lcov --gcov-tool /usr/bin/gcov-4.9 --remove coverage.info '/usr/*' --output-file coverage.info; fi
