@@ -61,3 +61,9 @@ Another unfortunate aspect of this library is that the member must be declared
 before invoking the FORWARD_TO_MEMBER macro. This disallows an often-used
 convention where the public methods are at the top of the class and the members
 are at the bottom.
+
+Compilers
+---------
+This library uses features from c++11 and requires gcc-4.9 or greater. Also
+tested under clang-3.6.2, but it probably works in older versions of clang as
+well.
