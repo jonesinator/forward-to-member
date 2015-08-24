@@ -17,6 +17,7 @@ script:
 - if [ "$CXX" == "g++-4.9" ]; then make coverage; else make check; fi
 after_success:
 - echo $CXX
+- ls /usr/bin/gcov*
 - if [ "$CXX" == "g++-4.9" ]; then cd ${TRAVIS_BUILD_DIR}; fi
 - if [ "$CXX" == "g++-4.9" ]; then ./lcov-1.11/usr/bin/lcov --directory . --capture --output-file coverage.info; fi
 - if [ "$CXX" == "g++-4.9" ]; then ./lcov-1.11/usr/bin/lcov --remove coverage.info '/usr/*' --output-file coverage.info; fi
