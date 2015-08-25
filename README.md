@@ -6,37 +6,37 @@ This header-only library provides two macros FORWARD_TO_MEMBER and
 FORWARD_TO_MEMBER_AS. The purpose of these macros is to simplify the fairly
 common case below:
 
-    ```C++
-    #include <iostream>
+```cpp
+#include <iostream>
 
-    class foo
+class foo
+{
+public:
+    void method()
     {
-    public:
-        void method()
-        {
-            std::cout << "METHOD" << std::endl;
-        }
-    };
-    
-    class bar
-    {
-    private:
-        foo f;
-    
-    public:
-        void method()
-        {
-            f.method();
-        }
-    };
-
-    int main(int, char**)
-    {
-        bar b;
-        b.method();
-        return 0;
+        std::cout << "METHOD" << std::endl;
     }
-    ```
+};
+
+class bar
+{
+private:
+    foo f;
+
+public:
+    void method()
+    {
+        f.method();
+    }
+};
+
+int main(int, char**)
+{
+    bar b;
+    b.method();
+    return 0;
+}
+```
 
 This pattern of exposing the public method of a member as a public method of
 the containing class is a reasonably common occurence in certain systems. This
@@ -45,35 +45,35 @@ overloaded and has different const/volatile specifiers. It is the coders
 responsibility to make sure that the signature of the method in bar matches the
 signature of the method in foo. The FORWARD_TO_MEMBER macro simplifies this:
 
-    ```
-    #include <iostream>
-    #include "forward_to_member.hpp"
+```cpp
+#include <iostream>
+#include "forward_to_member.hpp"
 
-    class foo
+class foo
+{
+public:
+    void method()
     {
-    public:
-        void method()
-        {
-            std::cout << "METHOD" << std::endl;
-        }
-    };
-    
-    class bar
-    {
-    private:
-        foo f;
-    
-    public:
-        FORWARD_TO_MEMBER(f, method);
-    };
-
-    int main(int, char**)
-    {
-        bar b;
-        b.method();
-        return 0;
+        std::cout << "METHOD" << std::endl;
     }
-    ```
+};
+
+class bar
+{
+private:
+    foo f;
+
+public:
+    FORWARD_TO_MEMBER(f, method);
+};
+
+int main(int, char**)
+{
+    bar b;
+    b.method();
+    return 0;
+}
+```
 
 Here FOWARD_TO_MEMBER is responsible for matching the signature in foo, and can
 deal with all overloads of the method in foo. Unfortunately, given the amount
